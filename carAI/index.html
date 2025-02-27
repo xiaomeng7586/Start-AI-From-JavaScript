@@ -7,7 +7,13 @@
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-    <canvas id="myCanvas"></canvas>
+    <canvas id="carCanvas"></canvas>
+    <div id="buttons">
+        <button onclick="save()">保存记忆</button>
+        <button onclick="discard()">清除记忆</button>
+    </div>
+    <canvas id="networkCanvas"></canvas>
+    <script src="./visualizer.js"></script>
     <script src="./network.js"></script>
     <script src="./sensor.js"></script>
     <script src="./utils.js"></script>
