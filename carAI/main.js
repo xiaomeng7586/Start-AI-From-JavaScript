@@ -9,14 +9,26 @@ const networkCtx = networkCanvas.getContext("2d")
 
 const road = new Road(carCanvas.width / 2, carCanvas.width * 0.9, 3)
 
-const N = 1
+/**
+ * 训练时，将这里的N改的大一点，只要你的计算机承受得住，一般是1000
+ * 当你看到有汽车走的更远时，点击保存记忆，就相当于完成了一次训练，然后刷新浏览器，下次更多的汽车就会记住
+ * 当你觉得所有的汽车都卡住不前进时，可以点击清除记忆，消除所有的训练
+ * 当存在一个汽车每次都能绕过所有其他红色汽车时，就可以把下边的N改成1
+ * **/
+
+
+// const N = 1  //训练完成时用1
+const N = 1  //训练时可以用1000甚至更大，如果电脑承受不住，可以改小一点，比如100，那么就需要你自己多刷新浏览器
+
 const cars = generateCars(N)
 let bestCar = cars[0]
 if(localStorage.getItem("bestCar")) {
     for(let i = 0; i < cars.length; i++) {
         cars[i].brain = JSON.parse(localStorage.getItem("bestCar"))
         if(i != 0) {
-            NeuralNetwork.mutate(cars[i].brain, 0.1)
+            // 第一辆车完美继承本地训练结果，其他的会在此基础上进行突变，以免永远卡在某个地方
+            // 0.1表示很小的突变，如果第二个是1，那就是完全突变
+            NeuralNetwork.mutate(cars[i].brain, 0.2)
         }
     }
 }
